@@ -1,0 +1,72 @@
+{
+  "atomCode": "sonar-gate",
+  "name": "SonarQube quality gate",
+  "version": "1.0.0",
+  "description": "Reads the quality gate for a project and fails when it is red, naming the failing conditions.",
+  "execution": {
+    "packagePath": "sonar-gate.jar",
+    "language": "java",
+    "target": "$atom_java_path -cp sonar-gate.jar com.jenkinschina.atom.sdk.AtomRunner"
+  },
+  "input": {
+    "sonarUrl": {
+      "label": "SonarQube 地址",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "token": {
+      "label": "访问令牌",
+      "type": "password",
+      "default": ""
+    },
+    "projectKey": {
+      "label": "项目 Key",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "branch": {
+      "label": "分支（可选）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "pullRequest": {
+      "label": "Pull Request 号（可选）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "failOnWarning": {
+      "label": "WARN 也让这一步失败",
+      "type": "checkbox",
+      "default": "false"
+    },
+    "timeoutSeconds": {
+      "label": "超时（秒）",
+      "type": "vuex-input",
+      "default": "60"
+    }
+  },
+  "output": {
+    "gateStatus": {
+      "type": "string",
+      "description": "OK / WARN / ERROR"
+    },
+    "passed": {
+      "type": "string",
+      "description": "门禁是否通过"
+    },
+    "failingConditions": {
+      "type": "string",
+      "description": "未达标的条件数"
+    },
+    "conditions": {
+      "type": "string",
+      "description": "未达标条件的说明，一行一个"
+    }
+  },
+  "x-jenkins": {
+    "protocol": "jenkins-1",
+    "requires": {
+      "runner": ">=0.4.0"
+    }
+  }
+}

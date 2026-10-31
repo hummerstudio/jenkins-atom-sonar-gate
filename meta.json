@@ -1,0 +1,12 @@
+{
+  "name": "SonarQube quality gate",
+  "summary": "Reads the quality gate for a project and fails when it is red, naming the failing conditions.",
+  "author": "hummerstudio",
+  "license": "MIT",
+  "tags": [
+    "official-port",
+    "sonar",
+    "quality"
+  ],
+  "homepage": "https://github.com/hummerstudio/jenkins-atom-sonar-gate"
+}
