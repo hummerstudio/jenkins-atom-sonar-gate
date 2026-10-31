@@ -1,8 +1,8 @@
 {
   "atomCode": "sonar-gate",
   "name": "SonarQube quality gate",
-  "version": "1.0.0",
-  "description": "Reads the quality gate for a project and fails when it is red, naming the failing conditions.",
+  "version": "1.1.0",
+  "description": "Reads the quality gate for a project, optionally waiting for this build's analysis to finish, then fails the step or marks the build unstable.",
   "execution": {
     "packagePath": "sonar-gate.jar",
     "language": "java",
@@ -43,6 +43,31 @@
       "label": "超时（秒）",
       "type": "vuex-input",
       "default": "60"
+    },
+    "waitForAnalysis": {
+      "label": "先等这次的分析跑完（CE 任务）",
+      "type": "checkbox",
+      "default": "false"
+    },
+    "waitTimeoutSeconds": {
+      "label": "等分析的超时（秒，默认 300）",
+      "type": "vuex-input",
+      "default": "300"
+    },
+    "pollIntervalSeconds": {
+      "label": "查分析的间隔（秒，默认 10）",
+      "type": "vuex-input",
+      "default": "10"
+    },
+    "buildStatus": {
+      "label": "门禁红了怎么办（FAILURE / UNSTABLE）",
+      "type": "vuex-input",
+      "default": "FAILURE"
+    },
+    "componentKey": {
+      "label": "分析组件 Key（默认同项目 Key）",
+      "type": "vuex-input",
+      "default": ""
     }
   },
   "output": {
@@ -61,6 +86,18 @@
     "conditions": {
       "type": "string",
       "description": "未达标条件的说明，一行一个"
+    },
+    "buildStatus": {
+      "type": "string",
+      "description": "FAILURE / UNSTABLE"
+    },
+    "ceTaskStatus": {
+      "type": "string",
+      "description": "等待到的分析任务状态（没等则为空）"
+    },
+    "message": {
+      "type": "string",
+      "description": "门禁红的说明（此时 steps 仍为 success 的 UNSTABLE 场景会带）"
     }
   },
   "x-jenkins": {
