@@ -45,7 +45,7 @@ SonarQube 8.0 把这个参数拼成 `componentKey`，8.8 之后是 `component`�
 ## 验证
 
 ```bash
-./build.sh && ./tools/smoke.sh
+mvn verify    # 编译、打包到 dist/sonar-gate/，再跑 src/test/java/atom/SonarGateIT.java
 ```
 
 假 Sonar 有状态机：分析没跑完之前，门禁接口只答**上一次**的结论（`--stale-gate`）。所以「等了才读到新门禁」不是看日志相信的，而是靠结果对比证明的——同一个假服务器，不等待时原子读到旧门禁并失败，等待时才通过。另有超时、分析失败、`componentKey` 拼写回退、`UNSTABLE` 映射、401/404 各一条断言。
